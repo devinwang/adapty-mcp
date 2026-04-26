@@ -13,6 +13,7 @@
   "bin": { "adapty-mcp": "dist/index.js" },
   "files": ["dist/", "README.md", "LICENSE"],
   "engines": { "node": ">=18" },
+  "publishConfig": { "access": "public" },
   "scripts": {
     "build": "tsc",
     "postbuild": "chmod +x dist/index.js",
@@ -23,11 +24,12 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "clean": "rm -rf dist coverage",
+    "verify": "npm run typecheck && npm run test && npm run build",
     "prepare": "npm run build",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.0.4",
+    "@modelcontextprotocol/sdk": "~1.0.4",
     "undici": "^6.21.0",
     "zod": "^3.23.8"
   },
