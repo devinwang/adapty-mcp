@@ -1,0 +1,78 @@
+# Smithery configuration — https://smithery.ai/docs
+#
+# adapty-mcp is a local stdio MCP server launched via `npx -y` against the
+# published npm package. Auth is provided via env vars at spawn time.
+
+name: adapty-mcp
+displayName: Adapty MCP
+description: |
+  Model Context Protocol server for the public Adapty REST API — 27 tools
+  spanning Server-Side API v2 (profile, access-level, transaction,
+  integration-identifiers, paywall), legacy v1, Web API (public key),
+  Analytics Export (admin host), and webhook utilities (authorization
+  verify and event parser).
+
+repository:
+  type: git
+  url: https://github.com/devinwang/adapty-mcp
+
+homepage: https://github.com/devinwang/adapty-mcp#readme
+documentation: https://github.com/devinwang/adapty-mcp#readme
+
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties:
+      ADAPTY_SECRET_API_KEY:
+        type: string
+        description: Adapty secret API key (live). Required for Server-Side API, Legacy v1, and Analytics Export tools.
+      ADAPTY_PUBLIC_API_KEY:
+        type: string
+        description: Adapty public API key (live). Required for Web API tools.
+      ADAPTY_SECRET_API_KEY_SANDBOX:
+        type: string
+        description: Adapty secret API key for the sandbox environment.
+      ADAPTY_PUBLIC_API_KEY_SANDBOX:
+        type: string
+        description: Adapty public API key for the sandbox environment.
+      ADAPTY_MCP_CONFIG:
+        type: string
+        description: Override path to the multi-app accounts config file (default ~/.config/adapty-mcp/accounts.json).
+      ADAPTY_HTTP_TIMEOUT_MS:
+        type: string
+        description: Request timeout in milliseconds (default 30000).
+      ADAPTY_MCP_DEBUG:
+        type: string
+        description: Set to "1" to include redacted body excerpts in error logs.
+    required:
+      - ADAPTY_SECRET_API_KEY
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: ['-y', 'adapty-mcp'],
+      env: {
+        ...(config.ADAPTY_SECRET_API_KEY ? { ADAPTY_SECRET_API_KEY: config.ADAPTY_SECRET_API_KEY } : {}),
+        ...(config.ADAPTY_PUBLIC_API_KEY ? { ADAPTY_PUBLIC_API_KEY: config.ADAPTY_PUBLIC_API_KEY } : {}),
+        ...(config.ADAPTY_SECRET_API_KEY_SANDBOX ? { ADAPTY_SECRET_API_KEY_SANDBOX: config.ADAPTY_SECRET_API_KEY_SANDBOX } : {}),
+        ...(config.ADAPTY_PUBLIC_API_KEY_SANDBOX ? { ADAPTY_PUBLIC_API_KEY_SANDBOX: config.ADAPTY_PUBLIC_API_KEY_SANDBOX } : {}),
+        ...(config.ADAPTY_MCP_CONFIG ? { ADAPTY_MCP_CONFIG: config.ADAPTY_MCP_CONFIG } : {}),
+        ...(config.ADAPTY_HTTP_TIMEOUT_MS ? { ADAPTY_HTTP_TIMEOUT_MS: config.ADAPTY_HTTP_TIMEOUT_MS } : {}),
+        ...(config.ADAPTY_MCP_DEBUG ? { ADAPTY_MCP_DEBUG: config.ADAPTY_MCP_DEBUG } : {})
+      }
+    })
+
+tags:
+  - adapty
+  - subscriptions
+  - in-app-purchases
+  - iap
+  - storekit
+  - revenue
+  - mcp
+  - mcp-server
+
+metadata:
+  author: Devin Wang
+  license: MIT
+  node_version: ">=18"
