@@ -24,10 +24,15 @@ export type AdaptyAppConfig = z.infer<typeof AdaptyAppConfigSchema>;
 export const AdaptyAccountsConfigSchema = z.object({
   default: z.string().optional(),
   apps: z.record(z.string(), AdaptyAppConfigSchema),
-}).refine(
-  cfg => cfg.default === undefined || Object.hasOwn(cfg.apps, cfg.default),
-  { message: 'default must reference one of the apps' },
-);
+})
+  .refine(
+    cfg => Object.keys(cfg.apps).length > 0,
+    { message: 'at least one app must be configured' },
+  )
+  .refine(
+    cfg => cfg.default === undefined || Object.hasOwn(cfg.apps, cfg.default),
+    { message: 'default must reference one of the apps' },
+  );
 export type AdaptyAccountsConfig = z.infer<typeof AdaptyAccountsConfigSchema>;
 
 export interface ResolvedCredentials {

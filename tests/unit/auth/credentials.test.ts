@@ -70,4 +70,7 @@ describe('AdaptyAccountsConfigSchema', () => {
       apps: { a: { live: { secretKey: 'secret_live_x.y' } } },
     })).not.toThrow();
   });
+  it('rejects when apps is empty', () => {
+    expect(() => AdaptyAccountsConfigSchema.parse({ apps: {} })).toThrow();
+  });
 });
