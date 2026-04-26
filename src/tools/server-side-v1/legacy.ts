@@ -105,9 +105,13 @@ export const legacyTools: ToolDef[] = [
       schema: CreateSchema, args,
       handler: async (a) => deps.httpClient.request({
         method: 'POST',
-        path: pathWithId('/profiles/{id}/', targetId(a)),
+        path: '/profiles/',
         headers: legacyHeaders(deps, a),
-        body: a.attributes ?? {},
+        body: {
+          ...(a.customerUserId ? { customer_user_id: a.customerUserId } : {}),
+          ...(a.profileId ? { profile_id: a.profileId } : {}),
+          ...(a.attributes ?? {}),
+        },
       }),
     }),
   },

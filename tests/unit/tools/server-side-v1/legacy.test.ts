@@ -70,21 +70,22 @@ describe('legacy v1 tools', () => {
     expect(fetch.mock.calls[0]![0]).toBe('https://x/profiles/a%2Fb/');
   });
 
-  it('profile_create POSTs /profiles/ with attributes body, defaulting to {}', async () => {
+  it('profile_create POSTs /profiles/ with identity folded into the body alongside attributes', async () => {
     const fetch = vi.fn()
       .mockResolvedValueOnce(jsonResponse(201, { ok: true }))
       .mockResolvedValueOnce(jsonResponse(201, { ok: true }));
     const t = find('adapty_v1_profile_create');
     const d = deps(fetch);
-    await t.handler({ profileId: 'p1', attributes: { email: 'a@b.co' } }, d);
+    await t.handler({ customerUserId: 'u1', attributes: { email: 'a@b.co' } }, d);
     let init = fetch.mock.calls[0]![1] as RequestInit;
-    expect(fetch.mock.calls[0]![0]).toBe('https://x/profiles/p1/');
+    expect(fetch.mock.calls[0]![0]).toBe('https://x/profiles/');
     expect(init.method).toBe('POST');
-    expect(JSON.parse(init.body as string)).toEqual({ email: 'a@b.co' });
+    expect(JSON.parse(init.body as string)).toEqual({ customer_user_id: 'u1', email: 'a@b.co' });
 
     await t.handler({ profileId: 'p1' }, d);
     init = fetch.mock.calls[1]![1] as RequestInit;
-    expect(JSON.parse(init.body as string)).toEqual({});
+    expect(fetch.mock.calls[1]![0]).toBe('https://x/profiles/');
+    expect(JSON.parse(init.body as string)).toEqual({ profile_id: 'p1' });
   });
 
   it('profile_update PATCHes /profiles/{id}/ with attributes body', async () => {
