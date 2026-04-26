@@ -89,4 +89,18 @@ describe('profile tools', () => {
     expect(r.isError).toBe(true);
     expect((r.content[0] as { text: string }).text).toContain('401');
   });
+
+  it('adapty_profile_update accepts customerUserId path with platform header', async () => {
+    setupEnv();
+    const fetch = vi.fn().mockResolvedValue(jsonResponse(200, { profile_id: 'p1', access_levels: {}, subscriptions: {}, non_subscriptions: {} }));
+    const client = createHttpClient({ fetch, baseUrl: 'https://api.adapty.io/api/v2/server-side-api' });
+    const tool = profileTools.find(t => t.name === 'adapty_profile_update')!;
+    await tool.handler(
+      { customerUserId: 'u9', platform: 'iOS', attributes: { last_name: 'Z' } },
+      { accountStore: createAccountStore(), httpClient: client },
+    );
+    const init = fetch.mock.calls[0]![1] as RequestInit;
+    expect((init.headers as Record<string,string>)['adapty-customer-user-id']).toBe('u9');
+    expect((init.headers as Record<string,string>)['adapty-platform']).toBe('iOS');
+  });
 });

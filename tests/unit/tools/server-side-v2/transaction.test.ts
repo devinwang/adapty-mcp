@@ -44,3 +44,25 @@ it('transaction_set schema rejects empty transactionId', async () => {
   expect(r.isError).toBe(true);
   expect(fetch).not.toHaveBeenCalled();
 });
+
+it('transaction_set with customerUserId + purchaseToken and stripe_validate with customerId-only', async () => {
+  const fetch = vi.fn()
+    .mockResolvedValueOnce(new Response('{"ok":true}', { status: 200, headers: {'content-type':'application/json'} }))
+    .mockResolvedValueOnce(new Response('{"ok":true}', { status: 200, headers: {'content-type':'application/json'} }));
+  const client = createHttpClient({ fetch, baseUrl: 'https://x' });
+  const set = transactionTools.find(t => t.name === 'adapty_transaction_set')!;
+  const stripe = transactionTools.find(t => t.name === 'adapty_stripe_purchase_validate')!;
+  await set.handler(
+    { customerUserId: 'u9', store: 'play_store', transactionId: 'tx9', purchaseToken: 'tok9' },
+    { accountStore: createAccountStore(), httpClient: client },
+  );
+  const setBody = JSON.parse((fetch.mock.calls[0]![1] as RequestInit).body as string);
+  expect(setBody).toEqual({ store: 'play_store', transaction_id: 'tx9', purchase_token: 'tok9' });
+
+  await stripe.handler(
+    { customerUserId: 'u9', customerId: 'cus_only' },
+    { accountStore: createAccountStore(), httpClient: client },
+  );
+  const stripeBody = JSON.parse((fetch.mock.calls[1]![1] as RequestInit).body as string);
+  expect(stripeBody).toEqual({ customer_id: 'cus_only' });
+});

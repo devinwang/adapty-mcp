@@ -46,3 +46,28 @@ it('grant rejects empty accessLevelId', async () => {
   expect(r.isError).toBe(true);
   expect(fetch).not.toHaveBeenCalled();
 });
+
+it('grant accepts customerUserId without expiresAt and revoke accepts customerUserId', async () => {
+  const fetch = vi.fn()
+    .mockResolvedValueOnce(new Response('{"ok":true}', { status: 200, headers: {'content-type':'application/json'} }))
+    .mockResolvedValueOnce(new Response(null, { status: 204 }));
+  const client = createHttpClient({ fetch, baseUrl: 'https://x' });
+  const grant = accessLevelTools.find(t => t.name === 'adapty_access_level_grant')!;
+  const revoke = accessLevelTools.find(t => t.name === 'adapty_access_level_revoke')!;
+  await grant.handler(
+    { customerUserId: 'u9', accessLevelId: 'pro', startsAt: '2026-01-01T00:00:00Z' },
+    { accountStore: createAccountStore(), httpClient: client },
+  );
+  const grantInit = fetch.mock.calls[0]![1] as RequestInit;
+  const grantBody = JSON.parse(grantInit.body as string);
+  expect(grantBody.expires_at).toBeUndefined();
+  expect(grantBody.store).toBe('manual');
+  expect((grantInit.headers as Record<string,string>)['adapty-customer-user-id']).toBe('u9');
+
+  await revoke.handler(
+    { customerUserId: 'u9', accessLevelId: 'pro' },
+    { accountStore: createAccountStore(), httpClient: client },
+  );
+  const revokeInit = fetch.mock.calls[1]![1] as RequestInit;
+  expect((revokeInit.headers as Record<string,string>)['adapty-customer-user-id']).toBe('u9');
+});
