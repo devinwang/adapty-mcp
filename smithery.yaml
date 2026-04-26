@@ -39,12 +39,6 @@ startCommand:
       ADAPTY_MCP_CONFIG:
         type: string
         description: Override path to the multi-app accounts config file (default ~/.config/adapty-mcp/accounts.json).
-      ADAPTY_HTTP_TIMEOUT_MS:
-        type: string
-        description: Request timeout in milliseconds (default 30000).
-      ADAPTY_MCP_DEBUG:
-        type: string
-        description: Set to "1" to include redacted body excerpts in error logs.
     required:
       - ADAPTY_SECRET_API_KEY
   commandFunction: |-
@@ -56,9 +50,7 @@ startCommand:
         ...(config.ADAPTY_PUBLIC_API_KEY ? { ADAPTY_PUBLIC_API_KEY: config.ADAPTY_PUBLIC_API_KEY } : {}),
         ...(config.ADAPTY_SECRET_API_KEY_SANDBOX ? { ADAPTY_SECRET_API_KEY_SANDBOX: config.ADAPTY_SECRET_API_KEY_SANDBOX } : {}),
         ...(config.ADAPTY_PUBLIC_API_KEY_SANDBOX ? { ADAPTY_PUBLIC_API_KEY_SANDBOX: config.ADAPTY_PUBLIC_API_KEY_SANDBOX } : {}),
-        ...(config.ADAPTY_MCP_CONFIG ? { ADAPTY_MCP_CONFIG: config.ADAPTY_MCP_CONFIG } : {}),
-        ...(config.ADAPTY_HTTP_TIMEOUT_MS ? { ADAPTY_HTTP_TIMEOUT_MS: config.ADAPTY_HTTP_TIMEOUT_MS } : {}),
-        ...(config.ADAPTY_MCP_DEBUG ? { ADAPTY_MCP_DEBUG: config.ADAPTY_MCP_DEBUG } : {})
+        ...(config.ADAPTY_MCP_CONFIG ? { ADAPTY_MCP_CONFIG: config.ADAPTY_MCP_CONFIG } : {})
       }
     })
 

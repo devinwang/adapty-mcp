@@ -46,7 +46,7 @@ Each tool accepts optional `app` and `environment` arguments:
 
 When the config file is present, env-var fallbacks are NOT consulted, so multi-app setups behave predictably. The file mode is checked at startup; loose permissions trigger a stderr warning recommending `chmod 600`.
 
-Set `ADAPTY_HTTP_TIMEOUT_MS` to override the default 30-second timeout. Set `ADAPTY_MCP_DEBUG=1` to include redacted body excerpts in error logs.
+The default request timeout is 30 seconds; GET requests automatically retry up to three times on 429/502/503/504 responses with exponential backoff. Mutating verbs are never auto-retried.
 
 ## Tool catalog
 

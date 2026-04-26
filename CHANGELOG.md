@@ -16,3 +16,6 @@ Engineering:
 - All API keys redacted from every error message, log line, and tool result via a shared regex matcher.
 - Injectable HTTP client with 30s timeout and GET-only retry on 429/502/503/504 with exponential backoff.
 - Strict TypeScript (`exactOptionalPropertyTypes: true`), Node ≥ 18, ESM-only.
+
+Internal-only modules ready for future wiring:
+- `src/http/rate-limit.ts` — advisory token-bucket helper. Tested but not yet wired into the HTTP client; reserved as a hook for client-side advisory throttling in a follow-up release.
