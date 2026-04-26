@@ -81,7 +81,10 @@ function fromConfig(cfg: AdaptyAccountsConfig, input: ResolveInput): ResolvedCre
   }
   const pair = appCfg[env];
   if (!pair) throw new ConfigError(`app '${app}' has no '${env}' credentials configured`);
-  return { app, environment: env, ...pair };
+  const out: ResolvedCredentials = { app, environment: env };
+  if (pair.secretKey) out.secretKey = pair.secretKey;
+  if (pair.publicKey) out.publicKey = pair.publicKey;
+  return out;
 }
 
 function fromEnv(input: ResolveInput): ResolvedCredentials {
