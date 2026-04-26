@@ -6,3 +6,7 @@ coverage/
 *.log
 .env*
 ~/.config/adapty-mcp/
+
+# Local-only working artifacts
+.claude/
+docs/superpowers/
