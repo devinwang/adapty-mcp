@@ -49,6 +49,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:ci": "vitest run --coverage --reporter=verbose",
     "clean": "rm -rf dist coverage",
     "verify": "npm run typecheck && npm run test && npm run build",
     "prepare": "npm run build",
