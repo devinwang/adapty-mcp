@@ -17,7 +17,7 @@ describe('Profile schemas', () => {
   });
   it('ProfileAttributesUpdateSchema accepts known attribute keys', () => {
     expect(() => ProfileAttributesUpdateSchema.parse({
-      first_name: 'A', last_name: 'B', email: 'a@b.c', phone_number: '+1', custom_attributes: { plan: 'pro' },
+      first_name: 'A', last_name: 'B', email: 'a@b.co', phone_number: '+1', custom_attributes: { plan: 'pro' },
     })).not.toThrow();
   });
 });

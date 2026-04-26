@@ -13,7 +13,7 @@ export type AdaptyProfile = z.infer<typeof AdaptyProfileSchema>;
 export const ProfileAttributesUpdateSchema = z.object({
   first_name: z.string().optional(),
   last_name: z.string().optional(),
-  email: z.string().regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/).optional(),
+  email: z.string().email().optional(),
   phone_number: z.string().optional(),
   birthday: z.string().optional(),
   gender: z.enum(['m', 'f', 'o']).optional(),
