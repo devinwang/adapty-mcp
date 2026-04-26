@@ -2,18 +2,45 @@
   "name": "adapty-mcp",
   "version": "0.1.0",
   "description": "Model Context Protocol (MCP) server for Adapty — full coverage of Server-Side API v2, legacy v1, Web API, Analytics Export, and webhook utilities.",
-  "keywords": ["mcp", "mcp-server", "model-context-protocol", "adapty", "subscriptions", "in-app-purchase", "iap", "storekit", "revenue", "claude", "cursor"],
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "adapty",
+    "subscriptions",
+    "in-app-purchase",
+    "iap",
+    "storekit",
+    "revenue",
+    "claude",
+    "cursor"
+  ],
   "homepage": "https://github.com/devinwang/adapty-mcp#readme",
-  "repository": { "type": "git", "url": "git+https://github.com/devinwang/adapty-mcp.git" },
-  "bugs": { "url": "https://github.com/devinwang/adapty-mcp/issues" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devinwang/adapty-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/devinwang/adapty-mcp/issues"
+  },
   "license": "MIT",
   "author": "Devin Wang",
   "type": "module",
   "main": "dist/index.js",
-  "bin": { "adapty-mcp": "dist/index.js" },
-  "files": ["dist/", "README.md", "LICENSE"],
-  "engines": { "node": ">=18" },
-  "publishConfig": { "access": "public" },
+  "bin": {
+    "adapty-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "postbuild": "chmod +x dist/index.js",
@@ -31,7 +58,8 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "~1.0.4",
     "undici": "^6.21.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.25.2"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
