@@ -25,7 +25,7 @@ export const AdaptyAccountsConfigSchema = z.object({
   default: z.string().optional(),
   apps: z.record(z.string(), AdaptyAppConfigSchema),
 }).refine(
-  cfg => cfg.default === undefined || cfg.default in cfg.apps,
+  cfg => cfg.default === undefined || Object.hasOwn(cfg.apps, cfg.default),
   { message: 'default must reference one of the apps' },
 );
 export type AdaptyAccountsConfig = z.infer<typeof AdaptyAccountsConfigSchema>;

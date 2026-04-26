@@ -61,6 +61,10 @@ describe('AdaptyAccountsConfigSchema', () => {
     const cfg = { default: 'missing', apps: { a: { live: { secretKey: 'secret_live_x.y' } } } };
     expect(() => AdaptyAccountsConfigSchema.parse(cfg)).toThrow();
   });
+  it('rejects when default is a prototype method name', () => {
+    const cfg = { default: 'toString', apps: { a: { live: { secretKey: 'secret_live_x.y' } } } };
+    expect(() => AdaptyAccountsConfigSchema.parse(cfg)).toThrow();
+  });
   it('makes default optional', () => {
     expect(() => AdaptyAccountsConfigSchema.parse({
       apps: { a: { live: { secretKey: 'secret_live_x.y' } } },
