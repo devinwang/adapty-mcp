@@ -1,0 +1,36 @@
+{
+  "profile_id": "00000000-0000-4000-8000-000000000001",
+  "customer_user_id": "user-42",
+  "idfv": null,
+  "idfa": null,
+  "advertising_id": null,
+  "profile_install_datetime": "2025-10-01T08:00:00.000Z",
+  "user_agent": "MyApp/2.0 (iPhone; iOS 26.0) AdaptySDK/3.0.0",
+  "email": "user@example.com",
+  "event_type": "subscription_renewed",
+  "event_datetime": "2026-04-26T00:00:00.000Z",
+  "event_properties": {
+    "transaction_id": "1000000123456789",
+    "original_transaction_id": "1000000111111111",
+    "vendor_product_id": "com.example.pro_monthly",
+    "store": "app_store",
+    "currency": "USD",
+    "price_usd": 9.99,
+    "price": 9.99,
+    "expires_at": "2026-05-26T00:00:00.000Z"
+  },
+  "event_api_version": 1,
+  "profiles_sharing_access_level": [],
+  "attributions": {
+    "iphone": {
+      "source": "organic"
+    }
+  },
+  "user_attributes": {
+    "plan": "pro"
+  },
+  "integration_ids": {
+    "amplitude_user_id": "amp-42",
+    "mixpanel_user_id": "mp-42"
+  }
+}

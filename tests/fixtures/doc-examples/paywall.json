@@ -1,0 +1,22 @@
+{
+  "developer_id": "paywall_main_v3",
+  "name": "Main Paywall",
+  "revision": 7,
+  "products": [
+    {
+      "vendor_product_id": "com.example.pro_monthly",
+      "developer_id": "monthly_premium"
+    },
+    {
+      "vendor_product_id": "com.example.pro_yearly",
+      "developer_id": "yearly_premium"
+    }
+  ],
+  "remote_config": {
+    "headline_color": "#1f2937",
+    "cta": "Start free trial",
+    "show_close_button": true
+  },
+  "ab_test_name": null,
+  "audience_name": null
+}
